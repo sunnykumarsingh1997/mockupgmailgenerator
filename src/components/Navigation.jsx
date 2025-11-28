@@ -33,6 +33,9 @@ const Navigation = () => {
             <Link to="/invoice" style={linkStyle(location.pathname === '/invoice')}>
                 Invoice Generator
             </Link>
+            <Link to="/history" style={linkStyle(location.pathname === '/history')}>
+                History
+            </Link>
         </nav>
     );
 };

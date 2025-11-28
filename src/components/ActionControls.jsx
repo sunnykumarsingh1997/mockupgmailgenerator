@@ -32,16 +32,7 @@ const ActionControls = () => {
                 </div>
             </div>
 
-            <div className="form-group checkbox-group">
-                <label>
-                    <input
-                        type="checkbox"
-                        checked={actions.showReactions}
-                        onChange={(e) => handleChange('showReactions', e.target.checked)}
-                    />
-                    Show Reactions Row
-                </label>
-            </div>
+
 
             <div className="form-group">
                 <label>Footer Text</label>

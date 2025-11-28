@@ -8,13 +8,7 @@ const EmailActions = () => {
 
     return (
         <div className={`email-actions ${device}`}>
-            {actions.showReactions && (
-                <div className="reactions-row">
-                    <button className="reaction-btn"><FaThumbsUp /></button>
-                    <button className="reaction-btn"><FaHeart /></button>
-                    <button className="reaction-btn"><FaSmile /></button>
-                </div>
-            )}
+            {/* Reactions removed as per user request */}
 
             <div className="action-buttons-row">
                 <button className="action-btn reply">
