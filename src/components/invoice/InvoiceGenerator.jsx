@@ -33,35 +33,7 @@ import axisIcon from "./assets/Dispute-Forms/Axis/axis.jpg";
 import yesbankIcon from "./assets/Dispute-Forms/YESBANK/yes1.jpg";
 
 
-import "./InvoiceGenerator.css";
-import Stripe from "./refundInvoices/stripe/Stripe";
-import RefTwo from "./refundInvoices/ref2/RefundInvoice.jsx";
-import Hdfc from "./DisputeForms/HDFC/Hdfc";
-import Icici from "./DisputeForms/ICICI/Icici.jsx";
-import Axis from "./DisputeForms/AXIS/Axis.jsx";
-import Yesbank from "./DisputeForms/YESBANK/Yesbank.jsx";
-import Rbl from "./DisputeForms/RBL/Rbl.jsx";
-import Idfc from "./DisputeForms/IDFC/Idfc.jsx";
-import Indusind from "./DisputeForms/INDUSIND/Indusind.jsx";
-import Kotak from "./DisputeForms/KOTAK/Kotak.jsx";
-import Footer from "./Components/Footer.jsx";
-import BasicGmail from "./Gmails/Basic-Gmail/BasicGmail.jsx";
-import AmazonGmail from "./Gmails/Amazon-Gmail/AmazonGmail.jsx";
-import TblRefund from "./Gmails/TblRefund/TblRefund.jsx";
-import AmazonDE from "./Gmails/Amazon De/AmazonDE.jsx";
-import AmazonCa from "./Gmails/Amazon Ca/AmazonCa.jsx";
-import AmazonUk from "./Gmails/Amazon Uk/AmazonUk.jsx";
-import AmazonES from "./Gmails/Amazon ES/AmazonES.jsx";
 
-import FormIcon from "./Components/FormIcon.jsx";
-import TBLRefundIcon from "./assets/TBL-refund-icon.png"
-
-import hdfcIcon from "./assets/hdfc-dispute.jpg";
-import stripeIcon from "./assets/stripe-icon.png";
-import refund2Icon from "./assets/ref2-icon.png";
-import iciciIcon from "./assets/Dispute-Forms/ICICI/p1.jpg";
-import axisIcon from "./assets/Dispute-Forms/Axis/axis.jpg";
-import yesbankIcon from "./assets/Dispute-Forms/YESBANK/yes1.jpg";
 import rblIcon from "./assets/Dispute-Forms/RBL/RBL_pg1.jpg";
 import idfcIcon from "./assets/Dispute-Forms/IDFC/IDFC_pg1.jpg";
 import indusIcon from "./assets/Dispute-Forms/INDUSIND/indus_pg1.jpg";
