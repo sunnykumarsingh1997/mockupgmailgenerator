@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useEmail } from '../context/EmailContext';
-import { FaChevronLeft, FaEllipsisH, FaStar, FaReply, FaEllipsisV, FaArrowLeft, FaArchive, FaTrash, FaEnvelope, FaPrint, FaExternalLinkAlt } from 'react-icons/fa';
-import { MdLabelImportantOutline, MdKeyboardArrowDown } from 'react-icons/md';
+import { FaChevronLeft, FaStar, FaReply, FaEllipsisV, FaArrowLeft, FaArchive, FaTrash, FaEnvelope, FaPrint, FaExternalLinkAlt } from 'react-icons/fa';
+import { MdKeyboardArrowDown } from 'react-icons/md';
 import gmailLogo from '../assets/gmail_logo.png';
 
 const EmailHeader = () => {
@@ -28,7 +28,11 @@ const EmailHeader = () => {
                 {/* PC Top Bar (Gmail Logo area mock) */}
                 <div className="pc-top-bar">
                     <div className="gmail-logo">
-                        <img src={gmailLogo} alt="Gmail" style={{ height: '24px' }} />
+                        <span style={{ color: '#4285f4', fontWeight: 'bold', fontSize: '18px' }}>G</span>
+                        <span style={{ color: '#db4437', fontWeight: 'bold', fontSize: '18px' }}>m</span>
+                        <span style={{ color: '#f4b400', fontWeight: 'bold', fontSize: '18px' }}>a</span>
+                        <span style={{ color: '#4285f4', fontWeight: 'bold', fontSize: '18px' }}>i</span>
+                        <span style={{ color: '#0f9d58', fontWeight: 'bold', fontSize: '18px' }}>l</span>
                     </div>
                     <div className="pc-user-email">
                         {header.receiverEmail}

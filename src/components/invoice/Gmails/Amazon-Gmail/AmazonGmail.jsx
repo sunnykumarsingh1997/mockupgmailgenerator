@@ -7,6 +7,8 @@ import amazonLogo from "../../assets/amazon-logo-1.png";
 import gmailLogo from "../../assets/gmail-logo.png";
 import Preview from "../../Components/Preview";
 
+import GeminiFillButton from "../../../GeminiFillButton";
+
 export default function AmazonGmail() {
   const invoiceRef = useRef();
 
@@ -111,9 +113,35 @@ export default function AmazonGmail() {
     ); // Negative
   };
 
+  const handleFillAll = (jsonString) => {
+    try {
+      const data = JSON.parse(jsonString);
+      setName(data.name || "John Doe");
+      setEmail(data.email || "john.doe@example.com");
+      setOrderNo(data.tra1 || "123-1234567-1234567");
+      setDay(new Date().toLocaleDateString('en-US', { weekday: 'long' }));
+      setDate(data.date || "January 1, 2024");
+      setTime("10:00 AM");
+      setAmount(data.amount1 || "100.00");
+      setItem(data.item || "Wireless Headphones");
+      setQTY(data.qty || "1");
+      setAsin(data.asin || "B08XXXXXXX");
+      setReason(data.reason || "Item defective");
+      setCard(data.card ? "Visa" : "MasterCard");
+      setCardEXP(new Date(new Date().setFullYear(new Date().getFullYear() + 2)).toLocaleDateString('en-US', { month: '2-digit', year: '2-digit' }));
+      setDownloadDate(new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }));
+    } catch (e) {
+      console.error("Failed to parse AI response", e);
+    }
+  };
+
   return (
     <>
       <div className="input-fields">
+        <div style={{ marginBottom: '20px', padding: '10px', background: '#e3f2fd', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <span><strong>AI Auto-Fill:</strong> Generate a realistic invoice.</span>
+          <GeminiFillButton type="invoice_amazon" onFill={handleFillAll} />
+        </div>
         <div className="flex icici-ends gap-10">
           <div>NAME: </div>
           <input className="input" type="text" onChange={handleName} />
@@ -175,10 +203,10 @@ export default function AmazonGmail() {
         <button onClick={calculateRefunds}>CALCULATE</button>
         <div className="icici-hr-light"></div>
         <button onClick={handleDownload}>DOWNLOAD</button>
-        
+
       </div>
 
-      <Preview title="PREVIEW AMAZON AE FORM"/>
+      <Preview title="PREVIEW AMAZON AE FORM" />
       {/* FORM STARTS */}
       <div className="amazon-gmail-form" ref={invoiceRef}>
         <div className="flex amazon-mail-flex-gap">
@@ -334,7 +362,7 @@ export default function AmazonGmail() {
             ©2024 Amazon.com, Inc, or its affiliates. All rights reserved.
             Amazon, Amazon.ae, <br /> Amazon.com and the Amazon.ae logo are
             trademarks of Amazon.com, Inc. or its affiliates. Amazon.com, <span className="amazonDE-blue">410
-            Terry Avenue N., Seattle, WA 98109-5210.</span> 
+              Terry Avenue N., Seattle, WA 98109-5210.</span>
           </p>
 
           <img

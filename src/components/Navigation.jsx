@@ -10,7 +10,10 @@ const Navigation = () => {
         gap: '20px',
         padding: '10px',
         background: '#f8f9fa',
-        borderBottom: '1px solid #dee2e6'
+        borderBottom: '1px solid #dee2e6',
+        position: 'sticky',
+        top: 0,
+        zIndex: 1000
     };
 
     const linkStyle = (isActive) => ({

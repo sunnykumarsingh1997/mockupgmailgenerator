@@ -6,6 +6,7 @@ import mastercardLogo from "../../assets/mastercard.png";
 import amexLogo from "../../assets/amex.png";
 import visaLogo from "../../assets/visa.png";
 import "./Stripe.css"
+import GeminiFillButton from "../../../GeminiFillButton";
 
 const Stripe = () => {
   const [project, setProject] = useState("Procandi");
@@ -18,6 +19,22 @@ const Stripe = () => {
   const [currency, setcurrency] = useState("£");
   const [sec, setsec] = useState(10);
   const [invoice, setinvoice] = useState(1232);
+
+  const handleFillAll = (jsonString) => {
+    try {
+      const data = JSON.parse(jsonString);
+      setProject(data.merchant1 || "Procandi");
+      setamount(data.amount1 || "1,050.00");
+      setcurrency(data.currency || "£");
+      setcardlast(data.card ? data.card.slice(-4) : "0000");
+      setemail(data.email || "admin@procandi.com");
+      settime(data.date || "Mar 2, 2024");
+      setTrxTime(data.tra1 || "Apr 2, 2024");
+      setinvoice(Math.floor(1000 + Math.random() * 9000));
+    } catch (e) {
+      console.error("Failed to parse AI response", e);
+    }
+  };
 
   const projecthandeller = (element) => setProject(element.target.value);
   const cardhandeller = (element) => {
@@ -37,7 +54,7 @@ const Stripe = () => {
     incrementTime();
     const randomnumber = Math.floor(Math.random() * 5) + 1;
     setsec(sec + randomnumber);
-    setinvoice(invoice+1);
+    setinvoice(invoice + 1);
   };
 
   // Function to download as JPG
@@ -75,6 +92,10 @@ const Stripe = () => {
       <div className="final-flex">
         <div className="editor">
           <div className="details">
+            <div style={{ marginBottom: '20px', padding: '10px', background: '#e3f2fd', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <span><strong>AI Auto-Fill:</strong> Generate a realistic refund invoice.</span>
+              <GeminiFillButton type="invoice_stripe" onFill={handleFillAll} />
+            </div>
             <div className="flex m-10 gap-10">
               <div className="name">Project: </div>
               <input type="text" onChange={projecthandeller} value={project} />
@@ -210,7 +231,7 @@ const Stripe = () => {
           </div>
           <div className="summary-line">SUMMARY</div>
           <div className="amount-box">
-          <div className="flex">
+            <div className="flex">
               <div className="s-text"> Transaction Date </div>
               <div className="s-amount">
                 {trxTime}

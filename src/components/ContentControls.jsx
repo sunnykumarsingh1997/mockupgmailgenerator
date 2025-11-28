@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useEmail } from '../context/EmailContext';
+import GeminiFillButton from './GeminiFillButton';
 
 const ContentControls = () => {
     const { emailConfig, updateConfig } = useEmail();
@@ -65,6 +66,14 @@ const ContentControls = () => {
                     </button>
                 ))}
                 <button onClick={addMessage} style={{ padding: '5px 10px', borderRadius: '15px', border: '1px dashed #999', cursor: 'pointer' }}>+</button>
+            </div>
+
+            <div style={{ marginBottom: '15px', padding: '10px', background: '#e3f2fd', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <span><strong>AI Thread Generator:</strong> Create a full conversation.</span>
+                <GeminiFillButton type="email_thread" onFill={(messages) => {
+                    handleContentChange('messages', messages);
+                    setActiveMsgId(messages[0].id);
+                }} />
             </div>
 
             {activeMessage && (
@@ -137,14 +146,19 @@ const ContentControls = () => {
 
                     <div className="form-group">
                         <label>
-                            Body Text
-                            <span style={{ float: 'right', fontSize: '0.8em' }}>
-                                <input
-                                    type="checkbox"
-                                    checked={activeMessage.isHtml}
-                                    onChange={(e) => updateMessage(activeMessage.id, 'isHtml', e.target.checked)}
-                                /> HTML Mode
-                            </span>
+                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                                <div style={{ display: 'flex', alignItems: 'center' }}>
+                                    Body Text
+                                    <GeminiFillButton type="email_body" onFill={(val) => updateMessage(activeMessage.id, 'body', val)} />
+                                </div>
+                                <span style={{ fontSize: '0.8em' }}>
+                                    <input
+                                        type="checkbox"
+                                        checked={activeMessage.isHtml}
+                                        onChange={(e) => updateMessage(activeMessage.id, 'isHtml', e.target.checked)}
+                                    /> HTML Mode
+                                </span>
+                            </div>
                         </label>
                         <textarea
                             rows="6"
