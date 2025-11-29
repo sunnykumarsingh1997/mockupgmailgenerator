@@ -27,7 +27,7 @@ const EmailBody = () => {
                         </div>
                     </div>
 
-                    <div className="email-content-text">
+                    <div className="email-content-text" style={{ textAlign: 'left' }}>
                         {msg.isHtml ? (
                             <div dangerouslySetInnerHTML={{ __html: msg.body }} />
                         ) : (
