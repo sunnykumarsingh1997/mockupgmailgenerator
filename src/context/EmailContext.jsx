@@ -24,7 +24,7 @@ export const EmailProvider = ({ children }) => {
             senderEmail: 'mirakle@example.com',
             senderInitial: 'M',
             senderImage: null,
-            receiver: 'to me',
+            receiver: 'me',
             receiverEmail: 'me@example.com',
             date: '21:20',
         },

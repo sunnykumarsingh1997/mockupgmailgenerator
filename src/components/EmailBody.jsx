@@ -21,8 +21,9 @@ const EmailBody = () => {
                             </span>
                             <span style={{ fontSize: '12px', color: '#5f6368' }}>{msg.time}</span>
                         </div>
-                        <div style={{ fontSize: '12px', color: '#5f6368' }}>
+                        <div style={{ fontSize: '12px', color: '#5f6368', marginTop: '2px', display: 'flex', alignItems: 'center' }}>
                             to {msg.receiver || 'me'}
+                            <span style={{ marginLeft: '5px' }}>&lt;{msg.receiverEmail || ''}&gt;</span>
                         </div>
                     </div>
 

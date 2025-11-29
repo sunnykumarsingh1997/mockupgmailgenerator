@@ -26,13 +26,10 @@ const EmailHeader = () => {
         return (
             <div className="email-header pc">
                 {/* PC Top Bar (Gmail Logo area mock) */}
+                {/* PC Top Bar (Gmail Logo area mock) */}
                 <div className="pc-top-bar">
                     <div className="gmail-logo">
-                        <span style={{ color: '#4285f4', fontWeight: 'bold', fontSize: '18px' }}>G</span>
-                        <span style={{ color: '#db4437', fontWeight: 'bold', fontSize: '18px' }}>m</span>
-                        <span style={{ color: '#f4b400', fontWeight: 'bold', fontSize: '18px' }}>a</span>
-                        <span style={{ color: '#4285f4', fontWeight: 'bold', fontSize: '18px' }}>i</span>
-                        <span style={{ color: '#0f9d58', fontWeight: 'bold', fontSize: '18px' }}>l</span>
+                        <img src="https://ssl.gstatic.com/ui/v1/icons/mail/rfr/logo_gmail_lockup_default_1x_r5.png" alt="Gmail" style={{ height: '20px', objectFit: 'contain' }} />
                     </div>
                     <div className="pc-user-email">
                         {header.receiverEmail}
@@ -72,8 +69,8 @@ const EmailHeader = () => {
                             <span className="pc-sender-email">&lt;{header.senderEmail}&gt;</span>
                         </div>
                         <div className="pc-receiver-line">
-                            <span className="pc-to">to me</span>
-                            <MdKeyboardArrowDown size={14} color="#5f6368" />
+                            <span className="pc-to">to {header.receiver}</span>
+                            <span className="pc-receiver-email" style={{ fontSize: '12px', color: '#5f6368' }}>&lt;{header.receiverEmail}&gt;</span>
                         </div>
                     </div>
                     <div className="pc-date-actions">
@@ -132,7 +129,7 @@ const EmailHeader = () => {
                             <span className="email-time">{header.date}</span>
                         </div>
                         <div className="receiver-row">
-                            <span className="receiver-text">{header.receiver}</span>
+                            <span className="receiver-text">to {header.receiver}</span>
                             <MdKeyboardArrowDown size={16} color="#666" />
                         </div>
                         {showDetails && (
@@ -191,7 +188,7 @@ const EmailHeader = () => {
                         <span className="email-date">{header.date}</span>
                     </div>
                     <div className="sender-bottom">
-                        <span className="receiver-label">{header.receiver}</span>
+                        <span className="receiver-label">To: {header.receiver}</span>
                         <span className="details-link">Hide</span>
                     </div>
                 </div>
