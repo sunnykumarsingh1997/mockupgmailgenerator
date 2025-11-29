@@ -56,6 +56,37 @@ const EmailBody = () => {
                     <button>View More</button>
                 </div>
             )}
+
+            {device === 'pc' && (
+                <button
+                    onClick={() => {
+                        const container = document.querySelector('.scrollable-content');
+                        if (container) {
+                            container.scrollBy({ top: 100, behavior: 'smooth' });
+                        }
+                    }}
+                    style={{
+                        position: 'fixed',
+                        bottom: '20px',
+                        left: '50%',
+                        transform: 'translateX(-50%)',
+                        background: '#1a73e8',
+                        color: 'white',
+                        border: 'none',
+                        borderRadius: '24px',
+                        padding: '8px 16px',
+                        cursor: 'pointer',
+                        boxShadow: '0 2px 5px rgba(0,0,0,0.2)',
+                        zIndex: 100,
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '8px',
+                        fontSize: '14px'
+                    }}
+                >
+                    Scroll Down ▼
+                </button>
+            )}
         </div>
     );
 };
