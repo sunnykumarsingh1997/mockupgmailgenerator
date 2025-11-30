@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useEmail } from '../context/EmailContext';
 import GeminiFillButton from './GeminiFillButton';
 
@@ -6,6 +6,7 @@ const ContentControls = () => {
     const { emailConfig, updateConfig } = useEmail();
     const { content, header } = emailConfig;
     const [activeMsgId, setActiveMsgId] = useState(content.messages[0]?.id);
+    const fileInputRefs = useRef({});
 
     const handleContentChange = (key, value) => {
         updateConfig('content', key, value);
@@ -21,10 +22,12 @@ const ContentControls = () => {
     const addMessage = () => {
         const newMsg = {
             id: Date.now(),
-            sender: header.senderName, // Default to main sender
-            senderEmail: header.senderEmail,
-            receiver: header.receiver,
-            receiverEmail: header.receiverEmail,
+            sender: header.senderName || '', // Default to main sender
+            senderEmail: header.senderEmail || '',
+            receiver: header.receiver || '',
+            receiverEmail: header.receiverEmail || '',
+            senderInitial: '',
+            senderImage: null,
             time: '10:00 AM',
             body: 'New message...',
             isMe: false,
@@ -32,6 +35,24 @@ const ContentControls = () => {
         };
         handleContentChange('messages', [...content.messages, newMsg]);
         setActiveMsgId(newMsg.id);
+    };
+
+    const handleImageUpload = (msgId, e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                updateMessage(msgId, 'senderImage', reader.result);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
+    const clearImage = (msgId) => {
+        updateMessage(msgId, 'senderImage', null);
+        if (fileInputRefs.current[msgId]) {
+            fileInputRefs.current[msgId].value = '';
+        }
     };
 
     const removeMessage = (id) => {
@@ -101,6 +122,38 @@ const ContentControls = () => {
                                 value={activeMessage.senderEmail || ''}
                                 onChange={(e) => updateMessage(activeMessage.id, 'senderEmail', e.target.value)}
                             />
+                        </div>
+                    </div>
+
+                    <div className="form-row">
+                        <div className="form-group">
+                            <label>Initial</label>
+                            <input
+                                type="text"
+                                maxLength="2"
+                                value={activeMessage.senderInitial || ''}
+                                onChange={(e) => updateMessage(activeMessage.id, 'senderInitial', e.target.value)}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>Sender Profile Image</label>
+                            <div style={{ display: 'flex', gap: '10px' }}>
+                                <input
+                                    type="file"
+                                    accept="image/*"
+                                    ref={(el) => fileInputRefs.current[activeMessage.id] = el}
+                                    onChange={(e) => handleImageUpload(activeMessage.id, e)}
+                                    style={{ fontSize: '0.8rem', width: '100%' }}
+                                />
+                                {activeMessage.senderImage && (
+                                    <button
+                                        onClick={() => clearImage(activeMessage.id)}
+                                        style={{ padding: '5px 10px', fontSize: '0.8rem', background: '#ff3b30', color: 'white', border: 'none', borderRadius: '4px' }}
+                                    >
+                                        X
+                                    </button>
+                                )}
+                            </div>
                         </div>
                     </div>
 

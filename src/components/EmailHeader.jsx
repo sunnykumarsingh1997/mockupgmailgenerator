@@ -1,26 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useEmail } from '../context/EmailContext';
 import { FaChevronLeft, FaStar, FaReply, FaEllipsisV, FaArrowLeft, FaArchive, FaTrash, FaEnvelope, FaPrint, FaExternalLinkAlt } from 'react-icons/fa';
-import { MdKeyboardArrowDown } from 'react-icons/md';
 import gmailLogo from '../assets/gmail_logo.png';
 
 const EmailHeader = () => {
     const { emailConfig } = useEmail();
     const { header, device } = emailConfig;
-    const [showDetails, setShowDetails] = useState(false);
-
-    const getInitials = (name) => {
-        return name ? name.charAt(0).toUpperCase() : '?';
-    };
-
-    const getRandomColor = (name) => {
-        const colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEEAD', '#A1887F', '#90A4AE'];
-        let hash = 0;
-        for (let i = 0; i < name.length; i++) {
-            hash = name.charCodeAt(i) + ((hash << 5) - hash);
-        }
-        return colors[Math.abs(hash) % colors.length];
-    };
 
     if (device === 'pc') {
         return (
@@ -30,9 +15,6 @@ const EmailHeader = () => {
                 <div className="pc-top-bar">
                     <div className="gmail-logo">
                         <img src="https://ssl.gstatic.com/ui/v1/icons/mail/rfr/logo_gmail_lockup_default_1x_r5.png" alt="Gmail" style={{ height: '20px', objectFit: 'contain' }} />
-                    </div>
-                    <div className="pc-user-email">
-                        {header.receiverEmail}
                     </div>
                 </div>
 
@@ -49,30 +31,8 @@ const EmailHeader = () => {
                     </div>
                 </div>
 
-                {/* Sender Info */}
+                {/* Date and Actions */}
                 <div className="pc-sender-row">
-                    <div className="avatar">
-                        {header.senderImage ? (
-                            <img src={header.senderImage} alt="Sender" />
-                        ) : (
-                            <div
-                                className="initial-circle"
-                                style={{ backgroundColor: getRandomColor(header.senderName), width: '32px', height: '32px', fontSize: '16px' }}
-                            >
-                                {header.senderInitial || getInitials(header.senderName)}
-                            </div>
-                        )}
-                    </div>
-                    <div className="pc-sender-details">
-                        <div className="pc-sender-line">
-                            <span className="pc-sender-name">{header.senderName}</span>
-                            <span className="pc-sender-email">&lt;{header.senderEmail}&gt;</span>
-                        </div>
-                        <div className="pc-receiver-line">
-                            <span className="pc-to">to {header.receiver}</span>
-                            <span className="pc-receiver-email" style={{ fontSize: '12px', color: '#5f6368' }}>&lt;{header.receiverEmail}&gt;</span>
-                        </div>
-                    </div>
                     <div className="pc-date-actions">
                         <span className="pc-date">{header.date}</span>
                         <div className="pc-actions">
@@ -109,36 +69,10 @@ const EmailHeader = () => {
                     </div>
                 </div>
 
-                {/* Sender Info */}
-                <div className="android-sender-row" onClick={() => setShowDetails(!showDetails)}>
-                    <div className="avatar">
-                        {header.senderImage ? (
-                            <img src={header.senderImage} alt="Sender" />
-                        ) : (
-                            <div
-                                className="initial-circle"
-                                style={{ backgroundColor: getRandomColor(header.senderName) }}
-                            >
-                                {header.senderInitial || getInitials(header.senderName)}
-                            </div>
-                        )}
-                    </div>
-                    <div className="android-sender-details">
-                        <div className="sender-name-row">
-                            <span className="sender-name">{header.senderName}</span>
-                            <span className="email-time">{header.date}</span>
-                        </div>
-                        <div className="receiver-row">
-                            <span className="receiver-text">to {header.receiver}</span>
-                            <MdKeyboardArrowDown size={16} color="#666" />
-                        </div>
-                        {showDetails && (
-                            <div className="expanded-details">
-                                <p>From: {header.senderName} &lt;{header.senderEmail}&gt;</p>
-                                <p>To: {header.receiverEmail}</p>
-                                <p>Date: {header.date}</p>
-                            </div>
-                        )}
+                {/* Date and Actions */}
+                <div className="android-sender-row">
+                    <div className="android-date-time">
+                        <span className="email-time">{header.date}</span>
                     </div>
                     <div className="android-reply-actions">
                         <FaReply size={18} color="#444" />
@@ -170,26 +104,9 @@ const EmailHeader = () => {
             </div>
 
             <div className="sender-info">
-                <div className="avatar">
-                    {header.senderImage ? (
-                        <img src={header.senderImage} alt="Sender" />
-                    ) : (
-                        <div
-                            className="initial-circle"
-                            style={{ backgroundColor: getRandomColor(header.senderName) }}
-                        >
-                            {header.senderInitial || getInitials(header.senderName)}
-                        </div>
-                    )}
-                </div>
                 <div className="sender-details">
                     <div className="sender-top">
-                        <span className="sender-name">{header.senderName}</span>
                         <span className="email-date">{header.date}</span>
-                    </div>
-                    <div className="sender-bottom">
-                        <span className="receiver-label">To: {header.receiver}</span>
-                        <span className="details-link">Hide</span>
                     </div>
                 </div>
             </div>
