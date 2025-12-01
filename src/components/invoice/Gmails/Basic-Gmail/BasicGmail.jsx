@@ -253,10 +253,10 @@ export default function BasicGmail() {
 
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                 <div style={{ flex: 1 }}>
-                  <p style={{ margin: 0, paddingLeft: 0, textAlign: 'left' }}>
+                  <p style={{ margin: 0, paddingLeft: 0, textAlign: 'left', lineHeight: '1', marginBottom: 0, paddingBottom: 0 }}>
                     <b>{msg.sender === 'buyer' ? buyer : merchant}</b> &lt;{msg.sender === 'buyer' ? buyerMail : merchantMail}&gt;
                   </p>
-                  <p className="amazon-gmail-to-address" style={{ margin: '0 0 10px 0', paddingLeft: 0, textAlign: 'left' }}>To: {msg.sender === 'buyer' ? merchantMail : buyerMail}</p>
+                  <p className="amazon-gmail-to-address" style={{ margin: '0 0 10px 0', paddingLeft: 0, textAlign: 'left', lineHeight: '1', marginTop: 0, paddingTop: 0 }}>To: {msg.sender === 'buyer' ? merchantMail : buyerMail}</p>
                 </div>
                 <p className="amazon-gmail-date" style={{ margin: 0 }}>
                   {msg.date}
