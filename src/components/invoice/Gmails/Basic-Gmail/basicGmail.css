@@ -1,6 +1,6 @@
 .basicgmail-form{
     width: 816px;
-    height: 2200px;
+    min-height: 2200px;
     background-color: WHITE;
 
     margin: auto;

@@ -10,18 +10,65 @@ export default function BasicGmail() {
   const invoiceRef = useRef();
   const handleDownload = () => {
     const element = invoiceRef.current;
+    if (!element) return;
+    
+    // Calculate dynamic height based on content
+    // Each message roughly takes ~200-300px, so for 10+ messages we need more height
+    // Convert pixels to inches: 1 inch = 96 pixels (at 96 DPI)
+    // With scale 2, we need to account for the scaling
+    const contentHeight = element.scrollHeight;
+    const contentWidth = element.scrollWidth;
+    
+    // Convert to inches (96 DPI standard, but html2canvas scale affects this)
+    // At scale 2, the image is 2x larger, so we divide by 2 when converting
+    const pixelsPerInch = 96;
+    const scale = 2;
+    
+    // Height calculation: (contentHeight * scale) / (pixelsPerInch * scale) = contentHeight / pixelsPerInch
+    // But we need to account for the fact that html2pdf will scale it
+    const heightInInches = contentHeight / pixelsPerInch;
+    const widthInInches = contentWidth / pixelsPerInch;
+    
+    // Ensure minimum size and add buffer for safety
+    const minHeight = 17; // Original minimum
+    const minWidth = 9; // Original width
+    const buffer = 2; // Extra inches buffer to ensure nothing is cut
+    const calculatedHeight = Math.max(minHeight, heightInInches + buffer);
+    const calculatedWidth = Math.max(minWidth, widthInInches);
+    
     const options = {
-      margin: 0,
+      margin: [0, 0, 0, 0],
       filename: 'invoice.pdf',
       image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { scale: 2 },
-      jsPDF: { unit: 'in', format: [9, 17], orientation: 'portrait' }
+      html2canvas: { 
+        scale: scale,
+        useCORS: true,
+        logging: false,
+        allowTaint: true,
+        height: element.scrollHeight,
+        width: element.scrollWidth,
+        windowHeight: element.scrollHeight,
+        windowWidth: element.scrollWidth,
+        scrollX: 0,
+        scrollY: 0,
+        backgroundColor: '#ffffff'
+      },
+      jsPDF: { 
+        unit: 'in', 
+        format: [calculatedWidth, calculatedHeight], 
+        orientation: 'portrait',
+        compress: true
+      },
+      pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
     };
 
     html2pdf()
-      .from(element)
       .set(options)
-      .save();
+      .from(element)
+      .save()
+      .catch((error) => {
+        console.error('PDF generation error:', error);
+      });
 
     addToHistory('Invoice Download', `Basic Gmail - ${subject} - ${merchant}`);
   };
@@ -209,7 +256,7 @@ export default function BasicGmail() {
                   <p style={{ margin: 0, paddingLeft: 0, textAlign: 'left' }}>
                     <b>{msg.sender === 'buyer' ? buyer : merchant}</b> &lt;{msg.sender === 'buyer' ? buyerMail : merchantMail}&gt;
                   </p>
-                  <p className="amazon-gmail-to-address" style={{ margin: '4px 0 10px 0', paddingLeft: 0, textAlign: 'left' }}>To: {msg.sender === 'buyer' ? merchantMail : buyerMail}</p>
+                  <p className="amazon-gmail-to-address" style={{ margin: '0 0 10px 0', paddingLeft: 0, textAlign: 'left' }}>To: {msg.sender === 'buyer' ? merchantMail : buyerMail}</p>
                 </div>
                 <p className="amazon-gmail-date" style={{ margin: 0 }}>
                   {msg.date}
