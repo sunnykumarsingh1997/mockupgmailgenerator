@@ -34,7 +34,10 @@ const Navigation = () => {
                 Invoice Generator
             </Link>
             <Link to="/statements" style={linkStyle(location.pathname === '/statements')}>
-                Statements Reader
+                Statement Unlocker
+            </Link>
+            <Link to="/vault" style={linkStyle(location.pathname === '/vault')}>
+                Document Vault
             </Link>
             <Link to="/history" style={linkStyle(location.pathname === '/history')}>
                 History

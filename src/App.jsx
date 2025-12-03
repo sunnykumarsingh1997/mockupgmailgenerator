@@ -5,6 +5,7 @@ import { EmailProvider } from './context/EmailContext';
 import Layout from './components/Layout';
 import InvoiceGenerator from './components/invoice/InvoiceGenerator';
 import StatementsReader from './components/StatementsReader';
+import DocumentVault from './components/DocumentVault';
 import Navigation from './components/Navigation';
 import Login from './components/Login';
 import HistoryManager from './components/HistoryManager';
@@ -49,6 +50,7 @@ function App() {
               } />
               <Route path="/invoice" element={<InvoiceGenerator />} />
               <Route path="/statements" element={<StatementsReader />} />
+              <Route path="/vault" element={<DocumentVault />} />
               <Route path="/history" element={<HistoryManager />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
