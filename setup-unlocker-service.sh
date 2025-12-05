@@ -33,7 +33,16 @@ if [ -d "backend-unlocker" ]; then
     cd backend-unlocker
     
     if [ -f "requirements.txt" ]; then
-        pip3 install -r requirements.txt
+        echo "📦 Creating Python virtual environment..."
+        python3 -m venv venv
+        
+        echo "📥 Installing Python dependencies..."
+        source venv/bin/activate
+        pip install --upgrade pip
+        pip install -r requirements.txt
+        deactivate
+        
+        echo "✅ Backend dependencies installed in virtual environment"
     fi
     
     # Create backend service (if needed)
