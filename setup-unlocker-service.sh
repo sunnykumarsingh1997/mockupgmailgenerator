@@ -52,20 +52,30 @@ fi
 
 # Create PM2 ecosystem file (use .cjs extension for CommonJS in ES module project)
 echo "📝 Creating PM2 configuration..."
+
+# Check if preview script exists, otherwise use serve or vite preview directly
+if grep -q '"preview"' package.json; then
+    SCRIPT_CMD="npm run preview"
+else
+    # Use vite preview directly with port and host
+    SCRIPT_CMD="npx vite preview --host 0.0.0.0 --port ${PORT}"
+fi
+
 cat > ecosystem.config.cjs << EOF
 module.exports = {
   apps: [{
     name: '${SERVICE_NAME}',
-    script: 'npm',
-    args: 'run preview',
+    script: '${SCRIPT_CMD}',
     cwd: '${APP_DIR}',
+    interpreter: 'none',
     instances: 1,
     autorestart: true,
     watch: false,
     max_memory_restart: '1G',
     env: {
       NODE_ENV: 'production',
-      PORT: ${PORT}
+      PORT: ${PORT},
+      HOST: '0.0.0.0'
     }
   }]
 };
