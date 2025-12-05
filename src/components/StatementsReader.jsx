@@ -5,7 +5,7 @@ const StatementUnlocker = () => {
     return (
         <div className="statement-unlocker-container">
             <iframe
-                src="https://tools.codershive.in/"
+                src="https://pdf.codershive.in/"
                 title="Statement Unlocker"
                 className="external-app-iframe"
                 allow="clipboard-read; clipboard-write"

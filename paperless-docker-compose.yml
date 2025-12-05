@@ -1,0 +1,71 @@
+version: "3.4"
+
+services:
+  webserver:
+    image: ghcr.io/paperless-ngx/paperless-ngx:latest
+    container_name: paperless-webserver
+    restart: unless-stopped
+    depends_on:
+      - db
+      - redis
+    ports:
+      - "8000:8000"
+    environment:
+      PAPERLESS_URL: https://docs.codershive.in
+      PAPERLESS_SECRET_KEY: ${PAPERLESS_SECRET_KEY:-change-me-to-a-secret-key}
+      PAPERLESS_TIME_ZONE: UTC
+      PAPERLESS_OCR_LANGUAGE: eng
+      PAPERLESS_DBENGINE: postgresql
+      PAPERLESS_DBNAME: paperless
+      PAPERLESS_DBUSER: paperless
+      PAPERLESS_DBPASS: ${PAPERLESS_DB_PASSWORD:-paperless-password}
+      PAPERLESS_DBHOST: db
+      PAPERLESS_REDIS: redis://redis:6379
+      PAPERLESS_CONSUMPTION_DIR: /usr/src/paperless/consume
+      PAPERLESS_DATA_DIR: /usr/src/paperless/data
+      PAPERLESS_MEDIA_ROOT: /usr/src/paperless/media
+      PAPERLESS_STATICFILES_DIR: /usr/src/paperless/static
+    volumes:
+      - paperless_data:/usr/src/paperless/data
+      - paperless_media:/usr/src/paperless/media
+      - paperless_consume:/usr/src/paperless/consume
+      - paperless_export:/usr/src/paperless/export
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  db:
+    image: postgres:15
+    container_name: paperless-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: paperless
+      POSTGRES_USER: paperless
+      POSTGRES_PASSWORD: ${PAPERLESS_DB_PASSWORD:-paperless-password}
+    volumes:
+      - paperless_db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U paperless"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7
+    container_name: paperless-redis
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  paperless_data:
+  paperless_media:
+  paperless_consume:
+  paperless_export:
+  paperless_db:
+
