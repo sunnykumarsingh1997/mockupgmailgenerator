@@ -26,8 +26,10 @@ else
     exit 1
 fi
 
-# Enable sites
+# Enable sites (remove existing symlinks first if they exist)
 echo "🔗 Enabling sites..."
+rm -f /etc/nginx/sites-enabled/pdf.codershive.in
+rm -f /etc/nginx/sites-enabled/docs.codershive.in
 ln -sf /etc/nginx/sites-available/pdf.codershive.in /etc/nginx/sites-enabled/
 ln -sf /etc/nginx/sites-available/docs.codershive.in /etc/nginx/sites-enabled/
 
